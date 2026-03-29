@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="64" viewBox="0 0 220 64" role="img" aria-label="WebTales">
+  <defs>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0b4a4b" />
+      <stop offset="100%" stop-color="#117b7a" />
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="218" height="62" rx="12" fill="url(#g2)" stroke="#2a9f9e" />
+  <path d="M22 19h5l3 15 4-10h3l4 10 3-15h5l-5 26h-4l-5-12-5 12h-4z" fill="#e8fffd" />
+  <text x="64" y="35" fill="#f0fffe" font-size="18" font-family="Inter, Arial, sans-serif" font-weight="700">WebTales</text>
+  <text x="64" y="49" fill="#bdeeed" font-size="10" font-family="Inter, Arial, sans-serif">Digital Engineering</text>
+</svg>

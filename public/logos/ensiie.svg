@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="64" viewBox="0 0 220 64" role="img" aria-label="ENSIIE">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0e2f5a" />
+      <stop offset="100%" stop-color="#1b5ca7" />
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="218" height="62" rx="12" fill="url(#g1)" stroke="#4f7fbb" />
+  <circle cx="24" cy="32" r="10" fill="#e9f3ff" />
+  <circle cx="24" cy="32" r="5" fill="#1b5ca7" />
+  <text x="44" y="31" fill="#f5f9ff" font-size="17" font-family="Inter, Arial, sans-serif" font-weight="700">ENSIIE</text>
+  <text x="44" y="47" fill="#c8ddfb" font-size="10" font-family="Inter, Arial, sans-serif">Engineering School</text>
+</svg>

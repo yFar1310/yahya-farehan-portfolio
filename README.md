@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yahya Farehan Portfolio
 
-## Getting Started
+Premium personal portfolio built with Next.js, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui, and Lucide icons.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- shadcn/ui
+- Lucide React
+- next-themes (dark/light switch)
+
+## Features
+
+- Dark theme by default + light theme switch
+- French by default + English switch
+- Responsive premium UI (mobile + desktop)
+- Sticky navbar with active section highlighting
+- Animated section reveals and hover transitions
+- Structured sections for recruiters:
+  - Hero
+  - About
+  - Experience
+  - Featured Projects
+  - Skills
+  - Education
+  - Contact
+- SEO metadata configured in `src/app/layout.tsx`
+- Centralized and typed content in `src/data/portfolio.ts`
+
+## Project Structure
+
+```text
+src/
+  app/
+    globals.css
+    layout.tsx
+    page.tsx
+  components/
+    layout/
+      site-footer.tsx
+      site-header.tsx
+    providers/
+      theme-provider.tsx
+    sections/
+      about-section.tsx
+      contact-section.tsx
+      education-section.tsx
+      experience-section.tsx
+      hero-section.tsx
+      projects-section.tsx
+      skills-section.tsx
+    shared/
+      language-toggle.tsx
+      reveal.tsx
+      section-heading.tsx
+      theme-toggle.tsx
+    ui/
+      ...shadcn components
+    portfolio-page.tsx
+  data/
+    portfolio.ts
+  hooks/
+    use-active-section.ts
+  lib/
+    utils.ts
+  types/
+    portfolio.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open `http://localhost:3000`.
 
-## Learn More
+## Customization
 
-To learn more about Next.js, take a look at the following resources:
+- Update profile and section data in `src/data/portfolio.ts`
+- Replace portfolio placeholder link in `src/data/portfolio.ts` (`profile.portfolio`)
+- Adjust SEO metadata in `src/app/layout.tsx`
+- Add project screenshots inside project cards (`src/components/sections/projects-section.tsx`)
+- Add live demo links by extending project items in `src/types/portfolio.ts` and `src/data/portfolio.ts`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm run start
+```
 
-## Deploy on Vercel
+## Deploy on GitHub Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is configured for GitHub Pages static deployment using:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `next.config.ts` with `output: "export"`
+- GitHub Actions workflow: `.github/workflows/deploy-pages.yml`
+
+### Recommended repository naming
+
+- If you want root URL: `https://yFar1310.github.io/`
+  - Repository must be: `yFar1310.github.io`
+- If you use another repository name (example: `yahya-farehan-portfolio`)
+  - URL will be: `https://yFar1310.github.io/yahya-farehan-portfolio/`
+
+### First-time setup
+
+1. Create the repository on GitHub.
+2. Push `main` branch.
+3. On GitHub: `Settings -> Pages -> Source = GitHub Actions`.
+4. Wait for the workflow **Deploy to GitHub Pages** to finish.
