@@ -22,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { assetPath } from "@/lib/asset-path";
 import { cn } from "@/lib/utils";
 import type { Locale, PortfolioData } from "@/types/portfolio";
 import { t, tList } from "@/types/portfolio";
@@ -183,7 +184,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                         <div className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full border border-white/25 bg-black/15 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white/85 backdrop-blur-sm">
                           {logo ? (
                             <Image
-                              src={logo.src}
+                              src={assetPath(logo.src)}
                               alt={logo.alt}
                               width={132}
                               height={30}
@@ -302,7 +303,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                 {activeProjectLogo ? (
                   <span className="inline-flex w-fit rounded-xl border border-border/60 bg-white p-1.5">
                     <Image
-                      src={activeProjectLogo.src}
+                      src={assetPath(activeProjectLogo.src)}
                       alt={activeProjectLogo.alt}
                       width={160}
                       height={36}

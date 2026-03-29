@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { assetPath } from "@/lib/asset-path";
 import { cn } from "@/lib/utils";
 import type { Locale, PortfolioData } from "@/types/portfolio";
 
@@ -117,7 +118,7 @@ export function ProfileModal({
           }
         >
           <Image
-            src="/profile/yahya-profile.jpeg"
+            src={assetPath("/profile/yahya-profile.jpeg")}
             alt="Yahya Farehan profile picture"
             width={40}
             height={40}
@@ -137,7 +138,7 @@ export function ProfileModal({
           }
         >
           <Image
-            src="/profile/yahya-profile.jpeg"
+            src={assetPath("/profile/yahya-profile.jpeg")}
             alt="Yahya Farehan profile picture"
             width={64}
             height={64}
@@ -158,7 +159,7 @@ export function ProfileModal({
         <DialogHeader className="space-y-4 px-6 pb-5 pt-5 sm:px-8">
           <div className="inline-flex w-fit items-center rounded-2xl border border-border/60 bg-card p-1.5 shadow-sm shadow-black/25">
             <Image
-              src="/profile/yahya-profile.jpeg"
+              src={assetPath("/profile/yahya-profile.jpeg")}
               alt="Yahya Farehan profile portrait"
               width={132}
               height={132}

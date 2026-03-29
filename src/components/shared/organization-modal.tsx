@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { assetPath } from "@/lib/asset-path";
 import { cn } from "@/lib/utils";
 import type { Locale, LocalizedString, LocalizedStringArray } from "@/types/portfolio";
 import { t, tList } from "@/types/portfolio";
@@ -57,7 +58,7 @@ export function OrganizationModal({
         }
       >
         <Image
-          src={logoSrc}
+          src={assetPath(logoSrc)}
           alt={logoAlt}
           width={logoWidth}
           height={logoHeight}
@@ -74,7 +75,7 @@ export function OrganizationModal({
           </Badge>
           <span className="inline-flex w-fit rounded-xl border border-border/60 bg-white p-2">
             <Image
-              src={logoSrc}
+              src={assetPath(logoSrc)}
               alt={logoAlt}
               width={logoWidth}
               height={logoHeight}

@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   },
   basePath,
   assetPrefix: basePath || undefined,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   turbopack: {
     root: process.cwd(),
   },
