@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { FolderGit2, Mail, Menu, Network, X } from "lucide-react";
+import { Mail, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { ProfileModal } from "@/components/shared/profile-modal";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -141,7 +142,7 @@ export function SiteHeader({
             )}
             aria-label="GitHub"
           >
-            <FolderGit2 />
+            <GitHubIcon className="size-4" />
           </a>
           <a
             href={linkedinUrl}
@@ -153,7 +154,7 @@ export function SiteHeader({
             )}
             aria-label="LinkedIn"
           >
-            <Network />
+            <LinkedInIcon className="size-4" />
           </a>
           <LanguageToggle
             locale={locale}
@@ -248,7 +249,7 @@ export function SiteHeader({
                   rel="noopener noreferrer"
                   className={cn(buttonVariants({ variant: "ghost" }), "w-full justify-start")}
                 >
-                  <FolderGit2 />
+                  <GitHubIcon className="size-4" />
                   GitHub
                 </a>
                 <a
@@ -257,7 +258,7 @@ export function SiteHeader({
                   rel="noopener noreferrer"
                   className={cn(buttonVariants({ variant: "ghost" }), "w-full justify-start")}
                 >
-                  <Network />
+                  <LinkedInIcon className="size-4" />
                   LinkedIn
                 </a>
               </div>

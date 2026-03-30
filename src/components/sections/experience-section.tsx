@@ -19,6 +19,7 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
           <SectionHeading
             eyebrow={t(locale, data.labels.experienceEyebrow)}
             title={t(locale, data.experience.heading)}
+            className="mx-0 max-w-none"
           />
         </Reveal>
 
@@ -26,7 +27,7 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
           {data.experience.items.map((item, index) => (
             <Reveal key={item.company} delay={index * 0.08}>
               <Card className="border-border/60 bg-card/70 py-6 transition-all duration-300 hover:border-primary/30 hover:bg-card/85 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.6)]">
-                <CardHeader className="grid gap-4 px-6 sm:px-8 md:grid-cols-[1fr_auto] md:items-start">
+                <CardHeader className="grid gap-4 px-6 sm:px-8 lg:px-10 md:grid-cols-[minmax(0,1fr)_minmax(250px,320px)] md:items-start">
                   <div className="space-y-2">
                     <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
                       {item.company}
@@ -34,11 +35,11 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
                     <CardTitle className="text-2xl tracking-tight text-foreground md:text-3xl">
                       {t(locale, item.role)}
                     </CardTitle>
-                    <p className="text-sm leading-relaxed text-muted-foreground">
+                    <p className="max-w-[74ch] text-sm leading-relaxed text-muted-foreground text-pretty">
                       {t(locale, item.summary)}
                     </p>
                   </div>
-                  <div className="space-y-2 rounded-xl border border-border/60 bg-background/50 p-4 text-sm text-muted-foreground">
+                  <div className="space-y-2 rounded-xl border border-border/60 bg-background/50 p-4 text-sm text-muted-foreground md:justify-self-end">
                     <p className="inline-flex items-center gap-2">
                       <Timer className="size-4" aria-hidden />
                       {t(locale, item.period)}
@@ -54,7 +55,7 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-6 px-6 sm:px-8">
+                <CardContent className="space-y-6 px-6 sm:px-8 lg:px-10">
                   <ul className="grid gap-2.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
                     {tList(locale, item.bullets).map((bullet) => (
                       <li key={bullet} className="flex gap-2.5">

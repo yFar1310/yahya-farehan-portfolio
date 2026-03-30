@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, FolderGit2, Mail, MapPin, Network, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Sparkles } from "lucide-react";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { OrganizationModal } from "@/components/shared/organization-modal";
 import { ProfileModal } from "@/components/shared/profile-modal";
 import { Badge } from "@/components/ui/badge";
@@ -162,7 +163,7 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
             >
-              <FolderGit2 />
+              <GitHubIcon className="size-4" />
               {t(locale, hero.githubCta)}
             </a>
             <a
@@ -171,7 +172,7 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
             >
-              <Network />
+              <LinkedInIcon className="size-4" />
               {t(locale, hero.linkedInCta)}
             </a>
           </div>

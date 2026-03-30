@@ -1,4 +1,5 @@
-import { ArrowRight, FolderGit2, Globe, Mail, Network, Phone } from "lucide-react";
+import { ArrowRight, Globe, Mail, Phone } from "lucide-react";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { buttonVariants } from "@/components/ui/button";
@@ -70,7 +71,7 @@ export function ContactSection({ locale, data }: ContactSectionProps) {
                   className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full justify-between")}
                 >
                   {t(locale, contact.githubCta)}
-                  <FolderGit2 />
+                  <GitHubIcon className="size-4" />
                 </a>
                 <a
                   href={profile.linkedin}
@@ -79,7 +80,7 @@ export function ContactSection({ locale, data }: ContactSectionProps) {
                   className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full justify-between")}
                 >
                   {t(locale, contact.linkedInCta)}
-                  <Network />
+                  <LinkedInIcon className="size-4" />
                 </a>
                 <a
                   href={profile.portfolio}

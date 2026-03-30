@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Dumbbell, FolderGit2, Mail, Network, PencilLine, Volleyball } from "lucide-react";
+import { Dumbbell, Mail, PencilLine, Volleyball } from "lucide-react";
+import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import {
   Dialog,
   DialogContent,
@@ -186,7 +187,7 @@ export function ProfileModal({
                 rel="noopener noreferrer"
                 className={cn(buttonVariants({ variant: "outline" }), "justify-start")}
               >
-                <Network />
+                <LinkedInIcon className="size-4" />
                 LinkedIn
               </a>
               <a
@@ -195,7 +196,7 @@ export function ProfileModal({
                 rel="noopener noreferrer"
                 className={cn(buttonVariants({ variant: "outline" }), "justify-start")}
               >
-                <FolderGit2 />
+                <GitHubIcon className="size-4" />
                 GitHub
               </a>
               <a

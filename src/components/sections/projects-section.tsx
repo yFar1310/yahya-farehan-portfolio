@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ArrowUpRight, ChevronRight, FolderGit2, Layers3 } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Layers3 } from "lucide-react";
+import { GitHubIcon } from "@/components/shared/brand-icons";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Badge } from "@/components/ui/badge";
@@ -398,7 +399,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                         rel="noopener noreferrer"
                         className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
                       >
-                        <FolderGit2 />
+                        <GitHubIcon className="size-4" />
                         GitHub
                         <ArrowUpRight />
                       </a>
