@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Mail, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { ProfileModal } from "@/components/shared/profile-modal";
@@ -21,7 +21,6 @@ interface SiteHeaderProps {
   profile: PortfolioData["profile"];
   githubUrl: string;
   linkedinUrl: string;
-  email: string;
   labels: {
     languageSwitchLabel: string;
     themeSwitchLabel: string;
@@ -37,7 +36,6 @@ export function SiteHeader({
   profile,
   githubUrl,
   linkedinUrl,
-  email,
   labels,
 }: SiteHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -237,11 +235,13 @@ export function SiteHeader({
 
               <div className="grid gap-2 p-4">
                 <a
-                  href={`mailto:${email}`}
+                  href={linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={cn(buttonVariants({ variant: "outline" }), "w-full justify-start")}
                 >
-                  <Mail />
-                  {email}
+                  <LinkedInIcon className="size-4" />
+                  LinkedIn
                 </a>
                 <a
                   href={githubUrl}
@@ -251,15 +251,6 @@ export function SiteHeader({
                 >
                   <GitHubIcon className="size-4" />
                   GitHub
-                </a>
-                <a
-                  href={linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(buttonVariants({ variant: "ghost" }), "w-full justify-start")}
-                >
-                  <LinkedInIcon className="size-4" />
-                  LinkedIn
                 </a>
               </div>
             </SheetContent>

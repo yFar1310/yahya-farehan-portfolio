@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { Badge } from "@/components/ui/badge";
+import { SpotlightCard } from "@/components/shared/spotlight-card";
+import { TechBadge } from "@/components/shared/tech-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Locale, PortfolioData } from "@/types/portfolio";
 import { t } from "@/types/portfolio";
@@ -49,6 +50,7 @@ export function SkillsSection({ locale, data }: SkillsSectionProps) {
       <div className="mx-auto w-full max-w-6xl space-y-10">
         <Reveal>
           <SectionHeading
+            index={4}
             eyebrow={t(locale, data.labels.skillsEyebrow)}
             title={t(locale, data.skills.heading)}
             description={t(locale, data.labels.sectionDescriptionSkills)}
@@ -59,37 +61,33 @@ export function SkillsSection({ locale, data }: SkillsSectionProps) {
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {data.skills.groups.map((group, index) => (
             <Reveal key={group.category.en} delay={index * 0.05}>
-              <Card
-                className={`group relative h-full overflow-hidden border-border/60 bg-card/70 py-5 transition-all duration-300 hover:-translate-y-1 hover:bg-card/85 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.62)] ${accentThemes[index % accentThemes.length].ring}`}
-              >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/55 to-transparent" />
-                <div
-                  className={`absolute -right-10 -top-10 h-24 w-24 rounded-full blur-2xl transition-opacity duration-300 ${accentThemes[index % accentThemes.length].glow} opacity-70 group-hover:opacity-100`}
-                />
-                <CardHeader className="px-5 pb-2">
-                  <CardTitle
-                    className={`text-lg tracking-tight text-foreground transition-colors duration-300 ${accentThemes[index % accentThemes.length].title}`}
-                  >
-                    {t(locale, group.category)}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 px-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                    {t(locale, data.labels.skillsCoreLabel)}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {group.items.map((item) => (
-                      <Badge
-                        key={`${group.category.en}-${item}`}
-                        variant="secondary"
-                        className="bg-secondary/75 text-secondary-foreground transition-colors group-hover/card:bg-secondary"
-                      >
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <SpotlightCard className="h-full rounded-xl">
+                <Card
+                  className={`group relative h-full overflow-hidden border-border/60 bg-card/70 py-5 transition-all duration-300 hover:-translate-y-1 hover:bg-card/85 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.62)] ${accentThemes[index % accentThemes.length].ring}`}
+                >
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/55 to-transparent" />
+                  <div
+                    className={`absolute -right-10 -top-10 h-24 w-24 rounded-full blur-2xl transition-opacity duration-300 ${accentThemes[index % accentThemes.length].glow} opacity-70 group-hover:opacity-100`}
+                  />
+                  <CardHeader className="px-5 pb-2">
+                    <CardTitle
+                      className={`text-lg tracking-tight text-foreground transition-colors duration-300 ${accentThemes[index % accentThemes.length].title}`}
+                    >
+                      {t(locale, group.category)}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 px-5">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      {t(locale, data.labels.skillsCoreLabel)}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map((item) => (
+                        <TechBadge key={`${group.category.en}-${item}`} name={item} />
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

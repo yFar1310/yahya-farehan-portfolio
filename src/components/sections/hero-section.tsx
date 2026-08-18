@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Mail, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, MapPin, Send, Sparkles } from "lucide-react";
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import { OrganizationModal } from "@/components/shared/organization-modal";
 import { ProfileModal } from "@/components/shared/profile-modal";
@@ -26,19 +26,19 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
       logoWidth: 180,
       logoHeight: 52,
       summary: {
-        fr: "Ecole Nationale Superieure d'Informatique pour l'Industrie et l'Entreprise, avec un cursus d'ingenierie oriente production logicielle et systemes.",
+        fr: "École Nationale Supérieure d'Informatique pour l'Industrie et l'Entreprise, avec un cursus d'ingénierie orienté production logicielle et systèmes.",
         en: "Ecole Nationale Superieure d'Informatique pour l'Industrie et l'Entreprise with an engineering curriculum focused on software production and systems.",
       },
       bullets: {
         fr: [
-          "Cycle ingenieur en informatique en apprentissage (2024-2027).",
-          "Formation en architecture logicielle, algorithmique, data et systemes.",
-          "Double parcours academique avec Universite d'Evry Paris-Saclay (IMSD).",
+          "Cycle ingénieur en informatique en apprentissage (2024-2027).",
+          "Formation en architecture logicielle, algorithmique, data et systèmes.",
+          "Double diplôme avec l'Université Paris-Saclay : ingénieur ENSIIE + Master IMSD (Data / IA).",
         ],
         en: [
           "Engineering degree in computer science on an apprenticeship track (2024-2027).",
           "Training across software architecture, algorithms, data, and systems.",
-          "Double academic track with Universite d'Evry Paris-Saclay (IMSD).",
+          "Double degree with Universite Paris-Saclay: ENSIIE engineering degree + IMSD Master's (Data / AI).",
         ],
       },
       link: "https://www.ensiie.fr/",
@@ -50,19 +50,19 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
       logoWidth: 168,
       logoHeight: 52,
       summary: {
-        fr: "Equipe produit et ingenierie orientee plateformes web modernes, migration de stacks legacy et architectures cloud robustes.",
-        en: "Product and engineering team focused on modern web platforms, legacy stack migration, and robust cloud architectures.",
+        fr: "Agence produit et ingénierie, où je pilote plusieurs projets digitaux pour le client UCPA.",
+        en: "Product and engineering agency, where I lead several digital projects for client UCPA.",
       },
       bullets: {
         fr: [
-          "Apprentissage en ingenierie logicielle depuis septembre 2024.",
-          "Contribution a des plateformes multi-pages, APIs securisees et workflows medias.",
-          "Mobilite internationale prevue au Portugal en juillet-aout 2026.",
+          "Apprentissage en Project Management depuis septembre 2024.",
+          "Pilotage des projets SpeedBoat, Alpha, Pégase et Talent pour UCPA.",
+          "Mobilité internationale de 2 mois réalisée à Leiria (Portugal) en tant que Technical Project Manager.",
         ],
         en: [
-          "Software engineering apprenticeship since September 2024.",
-          "Contributions to multi-page platforms, secure APIs, and media workflows.",
-          "International mobility planned in Portugal in July-August 2026.",
+          "Project Management apprenticeship since September 2024.",
+          "Leading the SpeedBoat, Alpha, Pégase, and Talent projects for UCPA.",
+          "Completed a 2-month international mobility in Leiria (Portugal) as Technical Project Manager.",
         ],
       },
       link: "https://www.webtales.io/",
@@ -71,16 +71,29 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
   const collaborationPriorities =
     locale === "fr"
       ? [
-          "Modernisation de plateformes web en production",
-          "Cloud media workflows et securisation des APIs",
-          "Automatisation QA et fiabilite de delivery",
-          "Collaboration internationale (Portugal 2026)",
+          "Pilotage multi-projets pour le client UCPA",
+          "Coordination des équipes techniques et métier",
+          "Fiabilité de delivery et gestion des risques",
+          "Expérience terrain acquise à Leiria, Portugal",
         ]
       : [
-          "Production web platform modernization",
-          "Cloud media workflows and secure APIs",
-          "QA automation and delivery reliability",
-          "International collaboration track (Portugal 2026)",
+          "Multi-project delivery for client UCPA",
+          "Technical and business team coordination",
+          "Delivery reliability and risk management",
+          "On-site experience gained in Leiria, Portugal",
+        ];
+
+  const quickStats =
+    locale === "fr"
+      ? [
+          { value: "4", label: "Projets pilotés chez UCPA" },
+          { value: "1", label: "Mobilité internationale (Leiria, PT)" },
+          { value: "2027", label: "Diplôme ENSIIE + Master IMSD" },
+        ]
+      : [
+          { value: "4", label: "Projects led at UCPA" },
+          { value: "1", label: "International mobility (Leiria, PT)" },
+          { value: "2027", label: "ENSIIE Degree + IMSD Master's" },
         ];
 
   return (
@@ -121,7 +134,7 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/70 px-3 py-1">
               <Sparkles className="size-3.5" aria-hidden />
-              {locale === "fr" ? "Ecosysteme d'apprentissage" : "Learning Ecosystem"}
+              {locale === "fr" ? "Écosystème d'apprentissage" : "Learning Ecosystem"}
             </span>
           </div>
 
@@ -154,7 +167,7 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
                 "border-border/70"
               )}
             >
-              <Mail />
+              <Send />
               {t(locale, hero.secondaryCta)}
             </a>
             <a
@@ -212,9 +225,21 @@ export function HeroSection({ locale, data }: HeroSectionProps) {
                 ))}
               </div>
 
+              <div className="grid grid-cols-3 gap-2">
+                {quickStats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-lg border border-border/60 bg-background/60 p-3 text-center transition-transform duration-300 hover:-translate-y-0.5 hover:border-primary/30"
+                  >
+                    <p className="font-heading text-xl font-semibold text-primary">{stat.value}</p>
+                    <p className="mt-1 text-[11px] leading-tight text-muted-foreground">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+
               <div className="rounded-xl border border-border/60 bg-background/70 p-4">
                 <div className="mb-3 flex items-center justify-between text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                  <span>{locale === "fr" ? "Priorites 2026" : "2026 Priorities"}</span>
+                  <span>{locale === "fr" ? "Priorités" : "Priorities"}</span>
                   <span>2026</span>
                 </div>
                 <ul className="grid gap-2.5 text-sm leading-relaxed text-muted-foreground">

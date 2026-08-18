@@ -1,4 +1,4 @@
-import { Dumbbell, PencilLine, Volleyball } from "lucide-react";
+import { InterestBadge } from "@/components/shared/interest-badge";
 
 interface SiteFooterProps {
   locale: "fr" | "en";
@@ -17,8 +17,6 @@ export function SiteFooter({
   humanLabel,
   interests,
 }: SiteFooterProps) {
-  const interestIcons = [Dumbbell, Volleyball, PencilLine];
-
   return (
     <footer className="border-t border-border/50 bg-background/90 py-10">
       <div className="mx-auto grid w-full max-w-6xl gap-6 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8">
@@ -34,18 +32,9 @@ export function SiteFooter({
             {humanLabel}
           </p>
           <div className="flex flex-wrap items-center gap-2">
-            {interests.map((interest, index) => {
-              const Icon = interestIcons[index];
-              return (
-                <span
-                  key={interest}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-card/70 px-3 py-1 text-xs text-muted-foreground"
-                >
-                  {Icon ? <Icon className="size-3.5" aria-hidden /> : null}
-                  {interest}
-                </span>
-              );
-            })}
+            {interests.map((interest) => (
+              <InterestBadge key={interest} label={interest} />
+            ))}
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { BriefcaseBusiness, MapPin, Timer } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { SpotlightCard } from "@/components/shared/spotlight-card";
+import { TechBadge } from "@/components/shared/tech-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Locale, PortfolioData } from "@/types/portfolio";
@@ -17,6 +19,7 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
       <div className="mx-auto w-full max-w-6xl space-y-10">
         <Reveal>
           <SectionHeading
+            index={2}
             eyebrow={t(locale, data.labels.experienceEyebrow)}
             title={t(locale, data.experience.heading)}
             className="mx-0 max-w-none"
@@ -26,12 +29,23 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
         <div className="space-y-6">
           {data.experience.items.map((item, index) => (
             <Reveal key={item.company} delay={index * 0.08}>
+              <SpotlightCard className="rounded-xl">
               <Card className="border-border/60 bg-card/70 py-6 transition-all duration-300 hover:border-primary/30 hover:bg-card/85 hover:shadow-[0_18px_40px_-26px_rgba(0,0,0,0.6)]">
                 <CardHeader className="grid gap-4 px-6 sm:px-8 lg:px-10 md:grid-cols-[minmax(0,1fr)_minmax(250px,320px)] md:items-start">
                   <div className="space-y-2">
-                    <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
-                      {item.company}
-                    </Badge>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
+                        {item.company}
+                      </Badge>
+                      {item.tag ? (
+                        <Badge
+                          variant="secondary"
+                          className="border border-emerald-400/25 bg-emerald-500/15 text-emerald-200"
+                        >
+                          {t(locale, item.tag)}
+                        </Badge>
+                      ) : null}
+                    </div>
                     <CardTitle className="text-2xl tracking-tight text-foreground md:text-3xl">
                       {t(locale, item.role)}
                     </CardTitle>
@@ -71,14 +85,13 @@ export function ExperienceSection({ locale, data }: ExperienceSectionProps) {
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {item.tech.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="bg-secondary/70 text-secondary-foreground">
-                          {tech}
-                        </Badge>
+                        <TechBadge key={tech} name={tech} />
                       ))}
                     </div>
                   </div>
                 </CardContent>
               </Card>
+              </SpotlightCard>
             </Reveal>
           ))}
         </div>

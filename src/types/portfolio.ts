@@ -43,6 +43,8 @@ export interface ExperienceItem {
   summary: LocalizedString;
   bullets: LocalizedStringArray;
   tech: string[];
+  /** Optional highlight tag rendered next to the company badge (e.g. "International Mobility"). */
+  tag?: LocalizedString;
 }
 
 export interface ProjectItem {
@@ -75,11 +77,8 @@ export interface ContactContent {
   heading: LocalizedString;
   lead: LocalizedString;
   availability: LocalizedString;
-  emailCta: LocalizedString;
   githubCta: LocalizedString;
   linkedInCta: LocalizedString;
-  portfolioCta: LocalizedString;
-  portfolioPlaceholder: LocalizedString;
 }
 
 export interface SectionLabels {
@@ -121,11 +120,10 @@ export interface PortfolioData {
   profile: {
     name: string;
     location: string;
-    email: string;
-    phone: string;
+    // No email or phone number is exposed in the portfolio to avoid scraping.
+    // Use LinkedIn / GitHub as the contact channels instead.
     github: string;
     linkedin: string;
-    portfolio: string;
   };
   navItems: NavItem[];
   hero: HeroContent;

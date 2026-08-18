@@ -11,6 +11,7 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { SkillsSection } from "@/components/sections/skills-section";
 import { ScrollAtmosphere } from "@/components/shared/scroll-atmosphere";
+import { ScrollProgress } from "@/components/shared/scroll-progress";
 import { portfolioData } from "@/data/portfolio";
 import type { Locale } from "@/types/portfolio";
 import { t, tList } from "@/types/portfolio";
@@ -28,6 +29,7 @@ export function PortfolioPage() {
       </a>
 
       <ScrollAtmosphere />
+      <ScrollProgress />
 
       <SiteHeader
         locale={locale}
@@ -36,7 +38,6 @@ export function PortfolioPage() {
         profile={portfolioData.profile}
         githubUrl={portfolioData.profile.github}
         linkedinUrl={portfolioData.profile.linkedin}
-        email={portfolioData.profile.email}
         labels={{
           languageSwitchLabel: t(locale, portfolioData.labels.languageSwitchLabel),
           themeSwitchLabel: t(locale, portfolioData.labels.themeSwitchLabel),

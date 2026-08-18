@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ArrowUpRight, ChevronRight, Layers3 } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Layers3, RotateCcw, Sparkles } from "lucide-react";
 import { GitHubIcon } from "@/components/shared/brand-icons";
+import { FlipTiltCard } from "@/components/shared/flip-tilt-card";
 import { Reveal } from "@/components/shared/reveal";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { TechBadge } from "@/components/shared/tech-badge";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -42,6 +44,7 @@ const projectThemes = [
     cardShadow: "group-hover:shadow-[0_24px_54px_-28px_rgba(34,211,238,0.55)]",
     focusRing: "group-focus-visible:ring-cyan-300/35",
     modalShadow: "shadow-[0_35px_90px_-44px_rgba(34,211,238,0.45)]",
+    accentRgb: "34,211,238",
   },
   {
     cardGradient: "from-emerald-500/30 via-teal-500/20 to-primary/10",
@@ -51,6 +54,7 @@ const projectThemes = [
     cardShadow: "group-hover:shadow-[0_24px_54px_-28px_rgba(52,211,153,0.5)]",
     focusRing: "group-focus-visible:ring-emerald-300/35",
     modalShadow: "shadow-[0_35px_90px_-44px_rgba(52,211,153,0.42)]",
+    accentRgb: "52,211,153",
   },
   {
     cardGradient: "from-sky-500/30 via-indigo-500/20 to-primary/10",
@@ -60,6 +64,7 @@ const projectThemes = [
     cardShadow: "group-hover:shadow-[0_24px_54px_-28px_rgba(96,165,250,0.5)]",
     focusRing: "group-focus-visible:ring-sky-300/35",
     modalShadow: "shadow-[0_35px_90px_-44px_rgba(96,165,250,0.42)]",
+    accentRgb: "96,165,250",
   },
   {
     cardGradient: "from-orange-500/25 via-amber-500/20 to-primary/10",
@@ -69,6 +74,7 @@ const projectThemes = [
     cardShadow: "group-hover:shadow-[0_24px_54px_-28px_rgba(251,146,60,0.45)]",
     focusRing: "group-focus-visible:ring-orange-300/35",
     modalShadow: "shadow-[0_35px_90px_-44px_rgba(251,146,60,0.38)]",
+    accentRgb: "251,146,60",
   },
   {
     cardGradient: "from-fuchsia-500/25 via-rose-500/20 to-primary/10",
@@ -78,6 +84,7 @@ const projectThemes = [
     cardShadow: "group-hover:shadow-[0_24px_54px_-28px_rgba(244,114,182,0.45)]",
     focusRing: "group-focus-visible:ring-fuchsia-300/35",
     modalShadow: "shadow-[0_35px_90px_-44px_rgba(244,114,182,0.38)]",
+    accentRgb: "244,114,182",
   },
 ] as const;
 
@@ -94,11 +101,11 @@ const projectVisualSignals: Record<string, { fr: string[]; en: string[] }> = {
     en: ["CMS migration", "Multilingual navigation", "SSG/SSR delivery"],
   },
   TestPilot: {
-    fr: ["Playwright E2E", "Suites de regression", "Fiabilite release"],
+    fr: ["Playwright E2E", "Suites de régression", "Fiabilité release"],
     en: ["Playwright E2E", "Regression suites", "Release reliability"],
   },
   "DAM Platform": {
-    fr: ["Flux assets securises", "Cloud workflows", "Microservices"],
+    fr: ["Flux d'assets sécurisés", "Cloud workflows", "Microservices"],
     en: ["Secure asset flows", "Cloud workflows", "Microservices"],
   },
   PlanWatch: {
@@ -106,7 +113,7 @@ const projectVisualSignals: Record<string, { fr: string[]; en: string[] }> = {
     en: ["Full-stack product", "PERT visualization", "Monorepo architecture"],
   },
   "Insurance Claims E2E": {
-    fr: ["Orchestration BPMN", "Integration multi-protocoles", "Scenarios demo"],
+    fr: ["Orchestration BPMN", "Intégration multi-protocoles", "Scénarios démo"],
     en: ["BPMN orchestration", "Multi-protocol integration", "Demo scenarios"],
   },
 };
@@ -135,6 +142,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
         <Reveal>
           <div className="space-y-3">
             <SectionHeading
+              index={3}
               eyebrow={t(locale, data.labels.projectsEyebrow)}
               title={t(locale, data.projects.heading)}
               description={t(locale, data.labels.sectionDescriptionProjects)}
@@ -151,123 +159,195 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
             const focusSignals =
               projectVisualSignals[project.title]?.[locale] ??
               (locale === "fr"
-                ? ["Architecture", "Delivery", "Qualite logicielle"]
+                ? ["Architecture", "Delivery", "Qualité logicielle"]
                 : ["Architecture", "Delivery", "Software quality"]);
 
             return (
               <Reveal key={project.title} delay={index * 0.06}>
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  className="group block h-full w-full text-left outline-none"
-                  aria-label={`${project.title} - ${t(locale, data.labels.projectsOpenDetailsLabel)}`}
-                >
-                  <Card
-                    className={cn(
-                      "h-full border-border/60 bg-card/70 py-0 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:border-primary/35 group-hover:bg-card/85 group-focus-visible:-translate-y-1.5 group-focus-visible:border-primary/35 group-focus-visible:ring-2",
-                      theme.cardShadow,
-                      theme.focusRing
-                    )}
-                  >
-                    <CardHeader className="gap-0 px-0">
-                      <div
+                <FlipTiltCard
+                  className="h-full"
+                  accentRgb={theme.accentRgb}
+                  front={({ playUnlock, flip }) => (
+                    <div className="relative h-full w-full">
+                      <button
+                        type="button"
+                        onClick={() => playUnlock(() => setActiveIndex(index))}
+                        className="group block h-full w-full text-left outline-none"
+                        aria-label={`${project.title} - ${t(locale, data.labels.projectsOpenDetailsLabel)}`}
+                      >
+                        <Card
+                          className={cn(
+                            "h-full border-border/60 bg-card/70 py-0 transition-all duration-300 group-hover:border-primary/35 group-hover:bg-card/85 group-focus-visible:border-primary/35 group-focus-visible:ring-2",
+                            theme.cardShadow,
+                            theme.focusRing
+                          )}
+                        >
+                          <CardHeader className="gap-0 px-0">
+                            <div
+                              className={cn(
+                                "relative flex h-36 items-end overflow-hidden rounded-t-xl border-b border-border/60 bg-gradient-to-br p-5",
+                                theme.cardGradient
+                              )}
+                              aria-hidden
+                            >
+                              <div className="absolute inset-0 bg-gradient-to-t from-background/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                              <div
+                                className={cn("absolute -right-16 -top-14 h-28 w-28 rounded-full blur-2xl", theme.glowSoft)}
+                              />
+                              <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-white/20 opacity-0 blur-2xl transition-all duration-700 ease-out group-hover:left-[125%] group-hover:opacity-70" />
+                              <div className="absolute right-12 top-4 inline-flex items-center gap-1 rounded-full border border-white/25 bg-black/15 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white/85 backdrop-blur-sm">
+                                {logo ? (
+                                  <Image
+                                    src={assetPath(logo.src)}
+                                    alt={logo.alt}
+                                    width={132}
+                                    height={30}
+                                    className="h-5 w-auto rounded-sm bg-white px-1 py-0.5"
+                                  />
+                                ) : (
+                                  <>
+                                    <Layers3 className="size-3" />
+                                    {project.title}
+                                  </>
+                                )}
+                              </div>
+
+                              <div className="w-full space-y-2.5">
+                                <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/75">
+                                  {locale === "fr" ? "Axes projet" : "Project focus"}
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {focusSignals.map((signal) => (
+                                    <span
+                                      key={`${project.title}-${signal}`}
+                                      className="rounded-full border border-white/25 bg-black/15 px-2 py-1 text-[11px] leading-none text-white/90 backdrop-blur-sm transition-all duration-300 group-hover:border-white/35 group-hover:bg-black/25"
+                                    >
+                                      {signal}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="space-y-3 px-6 pt-5">
+                              <Badge variant="outline" className="w-fit border-primary/35 bg-primary/10 text-primary">
+                                {t(locale, project.status)}
+                              </Badge>
+                              <CardTitle className="font-heading text-xl leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
+                                {project.title}
+                              </CardTitle>
+                              <CardDescription className="text-sm leading-relaxed text-muted-foreground">
+                                {t(locale, project.summary)}
+                              </CardDescription>
+                            </div>
+                          </CardHeader>
+
+                          <CardContent className="space-y-6 px-6 py-5">
+                            <div className="space-y-3">
+                              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                                {t(locale, data.labels.projectsHighlightsLabel)}
+                              </p>
+                              <ul className="grid gap-2 text-sm leading-relaxed text-muted-foreground">
+                                {tList(locale, project.bullets).map((point) => (
+                                  <li key={point} className="flex gap-2.5">
+                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+                                    <span>{point}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </CardContent>
+
+                          <CardFooter className="justify-between gap-3 border-border/60 px-6">
+                            <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                              <Sparkles className="size-3.5" aria-hidden />
+                              {locale === "fr" ? "Retourner pour la stack" : "Flip for the stack"}
+                            </span>
+                            <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground transition-colors group-hover:text-primary">
+                              {t(locale, data.labels.projectsOpenDetailsLabel)}
+                              <ChevronRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                            </span>
+                          </CardFooter>
+                        </Card>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          flip();
+                        }}
+                        aria-label={locale === "fr" ? "Voir la stack technique" : "View tech stack"}
+                        className="absolute right-3 top-3 z-30 inline-flex size-8 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
+                      >
+                        <RotateCcw className="size-4" aria-hidden />
+                      </button>
+                    </div>
+                  )}
+                  back={({ flip }) => (
+                    <div className="relative h-full w-full">
+                      <Card
                         className={cn(
-                          "relative flex h-36 items-end overflow-hidden rounded-t-xl border-b border-border/60 bg-gradient-to-br p-5",
+                          "flex h-full flex-col border-border/60 bg-gradient-to-br py-0",
                           theme.cardGradient
                         )}
-                        aria-hidden
                       >
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <div
-                          className={cn("absolute -right-16 -top-14 h-28 w-28 rounded-full blur-2xl", theme.glowSoft)}
-                        />
-                        <div className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/2 -skew-x-12 bg-white/20 opacity-0 blur-2xl transition-all duration-700 ease-out group-hover:left-[125%] group-hover:opacity-70" />
-                        <div className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full border border-white/25 bg-black/15 px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-white/85 backdrop-blur-sm">
-                          {logo ? (
-                            <Image
-                              src={assetPath(logo.src)}
-                              alt={logo.alt}
-                              width={132}
-                              height={30}
-                              className="h-5 w-auto rounded-sm bg-white px-1 py-0.5"
-                            />
-                          ) : (
-                            <>
-                              <Layers3 className="size-3" />
-                              {project.title}
-                            </>
-                          )}
-                        </div>
-
-                        <div className="w-full space-y-2.5">
-                          <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-white/75">
-                            {locale === "fr" ? "Axes projet" : "Project focus"}
+                        <CardHeader className="gap-1 px-6 pt-6">
+                          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/70">
+                            {t(locale, data.labels.projectsStackLabel)}
                           </p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {focusSignals.map((signal) => (
-                              <span
-                                key={`${project.title}-${signal}`}
-                                className="rounded-full border border-white/25 bg-black/15 px-2 py-1 text-[11px] leading-none text-white/90 backdrop-blur-sm transition-all duration-300 group-hover:border-white/35 group-hover:bg-black/25"
-                              >
-                                {signal}
-                              </span>
+                          <CardTitle className="font-heading text-lg tracking-tight text-white">
+                            {project.title}
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex-1 space-y-4 px-6 py-5">
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.map((tech) => (
+                              <TechBadge key={tech} name={tech} className="bg-black/25 backdrop-blur-sm" />
                             ))}
                           </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3 px-6 pt-5">
-                        <Badge variant="outline" className="w-fit border-primary/35 bg-primary/10 text-primary">
-                          {t(locale, project.status)}
-                        </Badge>
-                        <CardTitle className="font-heading text-xl leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
-                          {project.title}
-                        </CardTitle>
-                        <CardDescription className="text-sm leading-relaxed text-muted-foreground">
-                          {t(locale, project.summary)}
-                        </CardDescription>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-6 px-6 py-5">
-                      <div className="space-y-3">
-                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                          {t(locale, data.labels.projectsHighlightsLabel)}
-                        </p>
-                        <ul className="grid gap-2 text-sm leading-relaxed text-muted-foreground">
-                          {tList(locale, project.bullets).map((point) => (
-                            <li key={point} className="flex gap-2.5">
-                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                              <span>{point}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((tech) => (
-                          <Badge
-                            key={tech}
-                            variant="secondary"
-                            className="bg-secondary/75 text-secondary-foreground transition-colors group-hover:bg-secondary"
+                          <p className="text-xs leading-relaxed text-white/75">
+                            {t(locale, data.labels.projectsGithubLabel)}:{" "}
+                            {project.github
+                              ? t(locale, data.labels.projectsAvailableLabel)
+                              : t(locale, data.labels.projectsPrivateLabel)}
+                          </p>
+                        </CardContent>
+                        <CardFooter className="gap-2 border-white/15 px-6 pb-6">
+                          <button
+                            type="button"
+                            onClick={() => setActiveIndex(index)}
+                            className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "flex-1 justify-center")}
                           >
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-
-                    <CardFooter className="justify-between gap-3 border-border/60 px-6">
-                      <span className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                        {t(locale, data.labels.projectsGithubLabel)}
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground transition-colors group-hover:text-primary">
-                        {t(locale, data.labels.projectsOpenDetailsLabel)}
-                        <ChevronRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-                      </span>
-                    </CardFooter>
-                  </Card>
-                </button>
+                            {t(locale, data.labels.projectsOpenDetailsLabel)}
+                          </button>
+                          {project.github ? (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(event) => event.stopPropagation()}
+                              className={cn(buttonVariants({ variant: "outline", size: "icon-sm" }), "border-white/30 text-white")}
+                              aria-label="GitHub"
+                            >
+                              <GitHubIcon className="size-4" />
+                            </a>
+                          ) : null}
+                        </CardFooter>
+                      </Card>
+                      <button
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          flip();
+                        }}
+                        aria-label={locale === "fr" ? "Voir le resume" : "View summary"}
+                        className="absolute right-3 top-3 z-30 inline-flex size-8 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
+                      >
+                        <RotateCcw className="size-4" aria-hidden />
+                      </button>
+                    </div>
+                  )}
+                />
               </Reveal>
             );
           })}
@@ -381,9 +461,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {activeProject.tech.map((tech) => (
-                        <Badge key={tech} variant="secondary" className="bg-secondary/75 text-secondary-foreground">
-                          {tech}
-                        </Badge>
+                        <TechBadge key={tech} name={tech} />
                       ))}
                     </div>
                   </section>

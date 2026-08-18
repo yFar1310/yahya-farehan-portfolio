@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Dumbbell, Mail, PencilLine, Volleyball } from "lucide-react";
+import { Dumbbell, PencilLine, Volleyball } from "lucide-react";
 import { GitHubIcon, LinkedInIcon } from "@/components/shared/brand-icons";
 import {
   Dialog,
@@ -43,7 +43,7 @@ export function ProfileModal({
       ? {
           title: "Profil personnel",
           subtitle:
-            "Developpeur full-stack oriente produit, j'aime travailler sur des plateformes web robustes et des solutions techniques utiles.",
+            "Project Manager orienté delivery, j'aime coordonner des équipes et des parties prenantes pour livrer des projets digitaux fiables.",
           openLabel: "Ouvrir le profil",
           quickLinks: "Liens rapides",
           funFacts: "Fun Facts",
@@ -51,21 +51,21 @@ export function ProfileModal({
             {
               icon: Volleyball,
               label: "Basketball",
-              text: "J'aime le basketball pour l'esprit d'equipe, la discipline et la prise de decision rapide.",
+              text: "J'aime le basketball pour l'esprit d'équipe, la discipline et la prise de décision rapide.",
               tone: "border-orange-400/25 bg-gradient-to-br from-orange-500/18 to-amber-500/10",
               iconTone: "text-orange-300",
             },
             {
               icon: Dumbbell,
               label: "Musculation",
-              text: "La musculation m'aide a garder un rythme de progression regulier et de la constance.",
+              text: "La musculation m'aide à garder un rythme de progression régulier et de la constance.",
               tone: "border-emerald-400/25 bg-gradient-to-br from-emerald-500/16 to-cyan-500/8",
               iconTone: "text-emerald-300",
             },
             {
               icon: PencilLine,
               label: "Peinture / dessin",
-              text: "Je peins et je dessine; cela renforce mon sens du detail et de la composition.",
+              text: "Je peins et je dessine ; cela renforce mon sens du détail et de la composition.",
               tone: "border-violet-400/25 bg-gradient-to-br from-violet-500/18 to-fuchsia-500/10",
               iconTone: "text-violet-300",
             },
@@ -74,7 +74,7 @@ export function ProfileModal({
       : {
           title: "Personal Profile",
           subtitle:
-            "Product-minded full-stack developer who enjoys building robust web platforms and useful technical solutions.",
+            "Delivery-minded Project Manager who enjoys coordinating teams and stakeholders to ship reliable digital projects.",
           openLabel: "Open Profile",
           quickLinks: "Quick Links",
           funFacts: "Fun Facts",
@@ -198,13 +198,6 @@ export function ProfileModal({
               >
                 <GitHubIcon className="size-4" />
                 GitHub
-              </a>
-              <a
-                href={`mailto:${profile.email}`}
-                className={cn(buttonVariants({ variant: "outline" }), "justify-start")}
-              >
-                <Mail />
-                {profile.email}
               </a>
             </div>
           </section>

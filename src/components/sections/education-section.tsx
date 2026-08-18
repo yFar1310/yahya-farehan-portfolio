@@ -16,6 +16,7 @@ export function EducationSection({ locale, data }: EducationSectionProps) {
       <div className="mx-auto w-full max-w-6xl space-y-10">
         <Reveal>
           <SectionHeading
+            index={5}
             eyebrow={t(locale, data.labels.educationEyebrow)}
             title={t(locale, data.education.heading)}
             description={t(locale, data.labels.sectionDescriptionEducation)}
