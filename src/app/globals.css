@@ -178,3 +178,24 @@
       color-mix(in oklab, var(--color-background) 92%, #020617) 100%
     );
 }
+
+/*
+ * 3D flip cards rely on backface-visibility to hide the "mirrored" face
+ * that is momentarily facing the viewer mid-flip. Tailwind's arbitrary
+ * value `[backface-visibility:hidden]` only emits the unprefixed
+ * property, which iOS Safari (the engine behind every mobile browser on
+ * iOS) ignores without the `-webkit-` prefix — causing the front face
+ * to show through, mirrored, on top of the back face. These utility
+ * classes add the vendor-prefixed version explicitly.
+ */
+.card-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.card-3d-scene {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}

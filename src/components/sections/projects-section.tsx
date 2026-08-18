@@ -172,7 +172,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                       <button
                         type="button"
                         onClick={() => playUnlock(() => setActiveIndex(index))}
-                        className="group block h-full w-full text-left outline-none"
+                        className="group block h-full w-full cursor-pointer text-left outline-none"
                         aria-label={`${project.title} - ${t(locale, data.labels.projectsOpenDetailsLabel)}`}
                       >
                         <Card
@@ -277,7 +277,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                           flip();
                         }}
                         aria-label={locale === "fr" ? "Voir la stack technique" : "View tech stack"}
-                        className="absolute right-3 top-3 z-30 inline-flex size-8 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
+                        className="absolute right-3 top-3 z-30 inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
                       >
                         <RotateCcw className="size-4" aria-hidden />
                       </button>
@@ -316,7 +316,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                           <button
                             type="button"
                             onClick={() => setActiveIndex(index)}
-                            className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "flex-1 justify-center")}
+                            className={cn(buttonVariants({ variant: "secondary", size: "sm" }), "flex-1 cursor-pointer justify-center")}
                           >
                             {t(locale, data.labels.projectsOpenDetailsLabel)}
                           </button>
@@ -341,7 +341,7 @@ export function ProjectsSection({ locale, data }: ProjectsSectionProps) {
                           flip();
                         }}
                         aria-label={locale === "fr" ? "Voir le resume" : "View summary"}
-                        className="absolute right-3 top-3 z-30 inline-flex size-8 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
+                        className="absolute right-3 top-3 z-30 inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-white/25 bg-black/25 text-white/90 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/45"
                       >
                         <RotateCcw className="size-4" aria-hidden />
                       </button>

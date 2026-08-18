@@ -1,23 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribe(callback: () => void) {
+  const query = window.matchMedia(QUERY);
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
+function getSnapshot() {
+  return window.matchMedia(QUERY).matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
 
 /**
  * Tracks the user's `prefers-reduced-motion` OS/browser setting so
- * decorative motion (3D tilt, cursor-tracking shine, etc.) can be
- * disabled for people who opt out of animations.
+ * decorative motion (3D tilt, cursor-tracking shine, unlock spins,
+ * etc.) can be disabled for people who opt out of animations.
+ *
+ * Uses `useSyncExternalStore` (rather than useState + useEffect) since
+ * this is exactly what it's designed for: subscribing to an external
+ * browser API and staying in sync with it, without the "setState
+ * inside an effect" anti-pattern.
  */
 export function usePrefersReducedMotion(): boolean {
-  const [prefersReduced, setPrefersReduced] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReduced(query.matches);
-
-    const handleChange = (event: MediaQueryListEvent) => setPrefersReduced(event.matches);
-    query.addEventListener("change", handleChange);
-    return () => query.removeEventListener("change", handleChange);
-  }, []);
-
-  return prefersReduced;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

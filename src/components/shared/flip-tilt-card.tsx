@@ -6,16 +6,19 @@ import { cn } from "@/lib/utils";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { UnlockGlow } from "@/components/shared/unlock-glow";
 
-const UNLOCK_ANIMATION_MS = 620;
+/** Number of full extra spins the card does before settling on its unlock face. */
+const UNLOCK_SPIN_LAPS = 3;
+/** Duration of a single lap (ms), scaled up per lap for a natural spin-down feel. */
+const UNLOCK_LAP_MS = 420;
 
 export interface FlipCardHelpers {
-  /** Silently flips the card to reveal the other face (no light show). */
+  /** Silently flips the card by half a turn to reveal the other face (no light show). */
   flip: () => void;
   isFlipped: boolean;
   /**
-   * Plays the "legendary card unlock" sequence: flips the card to its
-   * back face while a bright flash / energy rings / shine sweep play
-   * on top, then calls `onDone` once the animation settles. Used for
+   * Plays the "legendary card unlock" sequence: spins the card through
+   * several full rotations while flashes of escalating brightness pulse
+   * on top, then settles on the back face and calls `onDone`. Used for
    * the primary "open this project" interaction so it feels like
    * revealing a rare pack-opening card rather than a plain click.
    */
@@ -40,30 +43,45 @@ interface FlipTiltCardProps {
  * through whatever trigger the caller renders via the `front`/`back`
  * render props.
  *
+ * The rotation is tracked as an ever-increasing degree count (not just
+ * a 0/180 boolean) so `playUnlock` can spin the card through several
+ * full laps before settling — like a pack-opening reveal — while a
+ * plain `flip()` just advances by half a turn. Which face is showing
+ * is derived from the rotation's parity.
+ *
  * The face that isn't currently visible has `pointer-events: none` so
- * clicks never land on the wrong (invisible, backface-hidden) side —
- * both faces are geometrically coplanar in 3D space, so without this
- * the DOM's paint order could otherwise swallow clicks meant for the
- * visible face.
+ * clicks never land on the wrong (invisible, backface-hidden) side.
+ * Both faces use the `.card-face` / `.card-3d-scene` global CSS classes
+ * (see globals.css) instead of Tailwind's `[backface-visibility:hidden]`
+ * arbitrary value, because Tailwind only emits the unprefixed property —
+ * iOS Safari requires the `-webkit-` prefix, otherwise the front face
+ * shows through mirrored on mobile mid-flip.
  */
 export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" }: FlipTiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [rotation, setRotation] = useState(0);
   const [showUnlock, setShowUnlock] = useState(false);
+  const [spinLaps, setSpinLaps] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const flip = useCallback(() => setIsFlipped((value) => !value), []);
+  const isFlipped = Math.round(rotation / 180) % 2 !== 0;
+
+  const flip = useCallback(() => {
+    setRotation((value) => value + 180);
+  }, []);
 
   const playUnlock = useCallback(
     (onDone: () => void) => {
+      const laps = prefersReducedMotion ? 0 : UNLOCK_SPIN_LAPS;
+      setSpinLaps(laps);
       setShowUnlock(true);
-      setIsFlipped(true);
-      const settleDelay = prefersReducedMotion ? 0 : UNLOCK_ANIMATION_MS;
+      setRotation((value) => value + laps * 360 + 180);
+      const totalMs = prefersReducedMotion ? 0 : laps * UNLOCK_LAP_MS + 380;
       window.setTimeout(() => {
         onDone();
         setShowUnlock(false);
-        setIsFlipped(false);
-      }, settleDelay);
+        setRotation((value) => value - laps * 360);
+      }, totalMs);
     },
     [prefersReducedMotion]
   );
@@ -97,6 +115,12 @@ export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" 
     pointerY.set(0.5);
   };
 
+  const totalDurationSeconds = showUnlock
+    ? (spinLaps * UNLOCK_LAP_MS + 380) / 1000
+    : prefersReducedMotion
+      ? 0
+      : 0.6;
+
   return (
     <div
       ref={ref}
@@ -114,13 +138,16 @@ export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" 
         }}
       >
         <motion.div
-          className="relative h-full w-full [transform-style:preserve-3d]"
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="card-3d-scene relative h-full w-full"
+          animate={{ rotateY: rotation }}
+          transition={{
+            duration: totalDurationSeconds,
+            ease: showUnlock ? [0.15, 0.85, 0.3, 1] : [0.22, 1, 0.36, 1],
+          }}
         >
           {/* Front face */}
           <div
-            className="relative h-full w-full [backface-visibility:hidden]"
+            className="card-face relative h-full w-full"
             style={{ pointerEvents: isFlipped ? "none" : "auto" }}
           >
             {front(helpers)}
@@ -134,16 +161,16 @@ export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" 
 
           {/* Back face */}
           <div
-            className="absolute inset-0 h-full w-full [backface-visibility:hidden] [transform:rotateY(180deg)]"
-            style={{ pointerEvents: isFlipped ? "auto" : "none" }}
+            className="card-face absolute inset-0 h-full w-full"
+            style={{ transform: "rotateY(180deg)", pointerEvents: isFlipped ? "auto" : "none" }}
           >
             {back(helpers)}
           </div>
         </motion.div>
 
-        {/* Legendary unlock light show, rendered in card-local space so it flips with the card */}
+        {/* Legendary unlock light show, rendered in card-local space so it spins with the card */}
         <AnimatePresence>
-          {showUnlock ? <UnlockGlow accentRgb={accentRgb} /> : null}
+          {showUnlock ? <UnlockGlow accentRgb={accentRgb} laps={spinLaps} lapDurationMs={UNLOCK_LAP_MS} /> : null}
         </AnimatePresence>
       </motion.div>
     </div>
