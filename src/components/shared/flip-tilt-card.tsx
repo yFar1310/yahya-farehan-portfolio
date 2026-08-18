@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { UnlockGlow } from "@/components/shared/unlock-glow";
 
 /** Number of full extra spins the card does before settling on its unlock face. */
-const UNLOCK_SPIN_LAPS = 3;
+const UNLOCK_SPIN_LAPS = 1;
 /** Duration of a single lap (ms), scaled up per lap for a natural spin-down feel. */
 const UNLOCK_LAP_MS = 420;
 
@@ -51,11 +51,15 @@ interface FlipTiltCardProps {
  *
  * The face that isn't currently visible has `pointer-events: none` so
  * clicks never land on the wrong (invisible, backface-hidden) side.
- * Both faces use the `.card-face` / `.card-3d-scene` global CSS classes
- * (see globals.css) instead of Tailwind's `[backface-visibility:hidden]`
- * arbitrary value, because Tailwind only emits the unprefixed property —
- * iOS Safari requires the `-webkit-` prefix, otherwise the front face
- * shows through mirrored on mobile mid-flip.
+ * Every layer of the 3D chain (perspective root, tilt layer, flip
+ * scene, both faces) uses the global CSS classes in globals.css
+ * (`.card-perspective`, `.card-tilt-layer`, `.card-3d-scene`,
+ * `.card-face`) instead of Tailwind's arbitrary values or inline
+ * styles for `perspective` / `transform-style` / `backface-visibility`.
+ * Tailwind and plain inline styles only emit the unprefixed CSS
+ * property, and iOS Safari needs the `-webkit-` prefix on *every*
+ * layer in the chain — missing it on even one layer can make the
+ * front face show through mirrored on top of the back face mid-flip.
  */
 export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" }: FlipTiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -126,15 +130,13 @@ export function FlipTiltCard({ front, back, className, accentRgb = "56,189,248" 
       ref={ref}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className={cn("group/card relative", className)}
-      style={{ perspective: "1400px" }}
+      className={cn("card-perspective group/card relative", className)}
     >
       <motion.div
-        className="relative h-full w-full"
+        className="card-tilt-layer relative h-full w-full"
         style={{
           rotateX: prefersReducedMotion ? 0 : rotateX,
           rotateY: prefersReducedMotion ? 0 : rotateY,
-          transformStyle: "preserve-3d",
         }}
       >
         <motion.div

@@ -199,3 +199,20 @@
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
+
+/*
+ * The 3D chain needs EVERY layer between the perspective root and the
+ * backface-hidden faces to carry the -webkit- prefix, not just the
+ * flip layer itself — otherwise Safari on iOS can flatten/mis-render
+ * the chain and let the "wrong" face show through. These cover the
+ * outer perspective container and the pointer-tilt wrapper layer.
+ */
+.card-perspective {
+  -webkit-perspective: 1400px;
+  perspective: 1400px;
+}
+
+.card-tilt-layer {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
